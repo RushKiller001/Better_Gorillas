@@ -6,12 +6,12 @@
 
   <ItemGroup>
     <None Remove="Mat\betterice" />
+    <None Remove="Mat\mat" />
     <None Remove="Mat\rushspinmat" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Mat\betterice" />
-    <EmbeddedResource Include="Mat\rushspinmat" />
+    <EmbeddedResource Include="Mat\mat" />
   </ItemGroup>
 
   <ItemGroup>

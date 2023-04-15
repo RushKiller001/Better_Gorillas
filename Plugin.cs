@@ -21,20 +21,22 @@ namespace Better_Gorillas
     {
         public Material material;
         public Material material2;
+        public Material material3;
+        AssetBundle bundle;
         void Start()
         {
+            HarmonyPatches.ApplyHarmonyPatches();
+            Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream("Better_Gorillas.Mat.mat");
+            bundle = AssetBundle.LoadFromStream(s);
+            material = bundle.LoadAsset<Material>("Animated");
+            material2 = bundle.LoadAsset<Material>("BetterIce");
+            material3 = bundle.LoadAsset<Material>("ChestFace");
             Utilla.Events.GameInitialized += OnGameInitialized;
         }
 
         void OnGameInitialized(object sender, EventArgs e)
         {
-            HarmonyPatches.ApplyHarmonyPatches();
-            Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream("Better_Gorillas.Mat.rushspinmat");
-            AssetBundle bundle = AssetBundle.LoadFromStream(s);
-            Stream sT = Assembly.GetExecutingAssembly().GetManifestResourceStream("Better_Gorillas.Mat.betterice");
-            AssetBundle bundle2 = AssetBundle.LoadFromStream(sT);
-            material = bundle.LoadAsset<Material>("Animated");
-            material2 = bundle2.LoadAsset<Material>("BetterIce");
+            FindObjectOfType<VRRig>().gameObject.AddComponent<Matchanger>();
         }
     }
     public class Matchanger : MonoBehaviour
@@ -44,6 +46,8 @@ namespace Better_Gorillas
         {
             gameObject.GetComponent<VRRig>().materialsToChangeTo[2] = p.material;
             gameObject.GetComponent<VRRig>().materialsToChangeTo[3] = p.material2;
+            gameObject.GetComponent<VRRig>().mainSkin.transform.parent.Find("rig/body/head/gorillaface").gameObject.GetComponent<Renderer>().material = p.material3;
+            gameObject.GetComponent<VRRig>().mainSkin.transform.parent.Find("rig/body/gorillachest").gameObject.GetComponent<Renderer>().material = p.material3;
         }
     }
 }
